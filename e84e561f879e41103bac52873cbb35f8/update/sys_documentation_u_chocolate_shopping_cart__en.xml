@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update>
+    <sys_documentation element="" label="Chocolate Shopping Cart" language="en" table="u_chocolate_shopping_cart">
+        <sys_documentation action="INSERT_OR_UPDATE">
+            <element/>
+            <help/>
+            <hint/>
+            <label>Chocolate Shopping Cart</label>
+            <language>en</language>
+            <name>u_chocolate_shopping_cart</name>
+            <plural>Chocolate Shopping Carts</plural>
+            <sys_class_name>sys_documentation</sys_class_name>
+            <sys_created_by>admin</sys_created_by>
+            <sys_created_on>2022-03-09 18:52:15</sys_created_on>
+            <sys_id>92a9c1c7870641103bac52873cbb353f</sys_id>
+            <sys_mod_count>1</sys_mod_count>
+            <sys_name>Chocolate Shopping Cart</sys_name>
+            <sys_package display_value="Global" source="global">global</sys_package>
+            <sys_policy/>
+            <sys_scope display_value="ChocolateShop">e84e561f879e41103bac52873cbb35f8</sys_scope>
+            <sys_update_name>sys_documentation_u_chocolate_shopping_cart__en</sys_update_name>
+            <sys_updated_by>admin</sys_updated_by>
+            <sys_updated_on>2022-03-23 06:03:09</sys_updated_on>
+            <url/>
+            <url_target/>
+        </sys_documentation>
+    </sys_documentation>
+    <sys_claim action="INSERT_OR_UPDATE">
+        <claim_owner_scope display_value="ChocolateShop">e84e561f879e41103bac52873cbb35f8</claim_owner_scope>
+        <claim_timestamp>17fb55f31bf0000001</claim_timestamp>
+        <metadata_update_name>sys_documentation_u_chocolate_shopping_cart__en</metadata_update_name>
+        <previous_claim_app_version>1.0.0</previous_claim_app_version>
+        <previous_claim_name>ChocolateShop</previous_claim_name>
+        <previous_claim_scope>e84e561f879e41103bac52873cbb35f8</previous_claim_scope>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2022-03-23 06:03:09</sys_created_on>
+        <sys_id>34efda5387de41103bac52873cbb351b</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2022-03-23 06:03:09</sys_updated_on>
+    </sys_claim>
+</record_update>

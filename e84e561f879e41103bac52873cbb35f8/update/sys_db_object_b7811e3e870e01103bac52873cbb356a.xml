@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sys_db_object">
+    <sys_db_object action="INSERT_OR_UPDATE">
+        <access>public</access>
+        <actions_access>true</actions_access>
+        <alter_access>true</alter_access>
+        <caller_access/>
+        <client_scripts_access>true</client_scripts_access>
+        <configuration_access>true</configuration_access>
+        <create_access>true</create_access>
+        <create_access_controls>false</create_access_controls>
+        <delete_access>false</delete_access>
+        <extension_model/>
+        <is_extendable>false</is_extendable>
+        <label>chocolateShop</label>
+        <live_feed_enabled>false</live_feed_enabled>
+        <name>u_chocolateshop</name>
+        <number_ref display_value="CHO">d682da7e870e01103bac52873cbb35cf</number_ref>
+        <provider_class/>
+        <read_access>true</read_access>
+        <scriptable_table>false</scriptable_table>
+        <super_class display_value="Task" name="task">721670e7a5013010d152b15d612cbbb9</super_class>
+        <sys_class_code/>
+        <sys_class_name>sys_db_object</sys_class_name>
+        <sys_class_path/>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2022-03-09 05:28:39</sys_created_on>
+        <sys_id>b7811e3e870e01103bac52873cbb356a</sys_id>
+        <sys_mod_count>2</sys_mod_count>
+        <sys_name>chocolateShop</sys_name>
+        <sys_package display_value="Global" source="global">global</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="ChocolateShop">e84e561f879e41103bac52873cbb35f8</sys_scope>
+        <sys_update_name>sys_db_object_b7811e3e870e01103bac52873cbb356a</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2022-03-23 06:02:55</sys_updated_on>
+        <update_access>true</update_access>
+        <user_role/>
+        <ws_access>true</ws_access>
+    </sys_db_object>
+    <sys_claim action="INSERT_OR_UPDATE">
+        <claim_owner_scope display_value="ChocolateShop">e84e561f879e41103bac52873cbb35f8</claim_owner_scope>
+        <claim_timestamp>17fb55efae50000001</claim_timestamp>
+        <metadata_update_name>sys_db_object_b7811e3e870e01103bac52873cbb356a</metadata_update_name>
+        <previous_claim_app_version>1.0.0</previous_claim_app_version>
+        <previous_claim_name>ChocolateShop</previous_claim_name>
+        <previous_claim_scope>e84e561f879e41103bac52873cbb35f8</previous_claim_scope>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2022-03-23 06:02:55</sys_created_on>
+        <sys_id>11df5a5387de41103bac52873cbb35db</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2022-03-23 06:02:55</sys_updated_on>
+    </sys_claim>
+</record_update>

@@ -1,0 +1,197 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sp_widget">
+    <sp_widget action="INSERT_OR_UPDATE">
+        <category>custom</category>
+        <client_script><![CDATA[api.controller=function($scope,spUtil,spModal,$window) {
+  /* widget controller */
+  var c = this;
+	
+	$scope.clearCart = function(){
+		c.data.clear = "true";
+		spUtil.update($scope);
+		spUtil.addInfoMessage("Items in cart removed")
+		spUtil.update($scope);
+	}
+	
+	$scope.sortBy = function(field){
+		$scope.orderField = field.toString();
+	}
+	
+	$scope.modifyRec = function(cartItem){
+		$scope.modifyingRec = angular.copy(cartItem);
+	
+	}
+	
+	$scope.saveRec = function(cartItem){
+		$scope.data.modifiedRec = angular.copy(cartItem);
+		spUtil.update($scope);
+		$scope.modifyingRec = null;
+		$window.location.reload(true)
+	}
+		$scope.removeRec = function(cartItem){
+		$scope.data.toRemoveRec = angular.copy(cartItem);
+		spUtil.update($scope);
+		$scope.toRemoveRec = null;
+		$window.location.reload(true)
+
+	}
+	
+	
+	
+
+		
+	
+	
+
+};]]></client_script>
+        <controller_as>c</controller_as>
+        <css/>
+        <data_table>sp_instance</data_table>
+        <demo_data/>
+        <description/>
+        <docs/>
+        <field_list/>
+        <has_preview>true</has_preview>
+        <id>chocolatecartsummary</id>
+        <internal>false</internal>
+        <link><![CDATA[function link(scope, element, attrs, controller) {
+  
+}]]></link>
+        <name>chocolateCartSummary</name>
+        <option_schema/>
+        <public>true</public>
+        <roles/>
+        <script><![CDATA[(function($scope) {
+  /* populate the 'data' object */
+  /* e.g., data.table = $sp.getValue('table'); */
+//data.pqr = $sp.getParameter('key');
+	
+	data.items = [];
+	data.toPay = 0;
+	var cartRec = new GlideRecord('u_chocolate_shopping_cart');
+	cartRec.query();
+	while(cartRec.next()){
+		var cart = {};
+		cart.name = cartRec.u_name.toString();
+		cart.price = cartRec.u_price.toString();
+		cart.quantity = cartRec.u_quantity_to_buy.toString();
+		cart.id = cartRec.getValue('sys_id');
+		
+		
+		
+		for(var i=0;i<data.items.length;i++){
+			if(data.items[i].name === cart.name){
+				data.items[i].quantity = (parseInt(cart.quantity)+parseInt(data.items[i].quantity)).toString();
+				cart.duplicate = true;				
+			}
+		}
+		if(!cart.duplicate && cart.quantity>0){
+			data.items.push(cart);			
+		}
+		
+	}
+	
+	for(var j=0;j<data.items.length;j++){
+			data.toPay += data.items[j].quantity * data.items[j].price;
+		}
+
+	
+
+	if(input){
+		if(input.clear==="true"){
+			var gr = new GlideRecord('u_chocolate_shopping_cart');
+		gr.query();
+		while(gr.next()){
+			gr.deleteRecord();
+		}	
+		}
+		
+		
+		var modifyCart = new GlideRecord('u_chocolate_shopping_cart');
+		modifyCart.addQuery('sys_id',input.modifiedRec.id);
+		modifyCart.query();
+		if(modifyCart.next()){
+			modifyCart.u_quantity_to_buy = input.modifiedRec.quantity;
+			modifyCart.update();
+			
+		}
+		
+		var removeRec = new GlideRecord('u_chocolate_shopping_cart');
+		removeRec.addQuery('sys_id',input.toRemoveRec.id);
+		removeRec.query();
+		if(removeRec.next()){
+			removeRec.deleteRecord();
+			removeRec.update();
+			
+		}
+		
+
+	}
+})();]]></script>
+        <servicenow>false</servicenow>
+        <sys_class_name>sp_widget</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2022-03-09 18:33:46</sys_created_on>
+        <sys_id>f1550507870641103bac52873cbb3549</sys_id>
+        <sys_mod_count>213</sys_mod_count>
+        <sys_name>chocolateCartSummary</sys_name>
+        <sys_package display_value="Global" source="global">global</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="ChocolateShop">e84e561f879e41103bac52873cbb35f8</sys_scope>
+        <sys_update_name>sp_widget_f1550507870641103bac52873cbb3549</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2022-03-23 06:04:48</sys_updated_on>
+        <template><![CDATA[<style> 
+  #sm-tbl {
+  	
+  }
+</style>
+
+<div >
+  <h2>
+    Items in cart
+  </h2>
+  <center><table id="sm-tbl" border="1px" class="table table-striped">
+    <tr>
+      <th> <button ng-click="sortBy('name')">   Name   </button> </th>
+      <th><button ng-click="sortBy('price')"> Price </button></th>
+      <th><button ng-click="sortBy('quantity')"> Quantity </button></th>
+      
+    </tr>
+    
+    <tr ng-if="removeRec.id != item.id" ng-repeat="item in data.items | orderBy:orderField">
+      
+      <td>{{item.name}}</td>
+      <td>{{item.price}}</td>
+      <td ng-if="modifyingRec.id == item.id ">  <textarea ng-model="item.quantity"></textarea>     </td>
+      <td  ng-if='modifyingRec.id != item.id'>{{item.quantity}}</td>
+      <td ng-if="modifyingRec.id != item.id "> <button ng-click="modifyRec(item)">   Modify Quantity  </button>  </td>
+      <td ng-if="modifyingRec.id == item.id "> <button ng-click="saveRec(item)">   Save   </button>  </td>
+      <td  > <button ng-click="removeRec(item)">   Remove Item  </button>  </td>
+    </tr>
+    </table></center><br>
+
+ 
+<h4 ng-if="data.items.length>0">
+  To pay: Rs. {{data.toPay}}
+  </h4> 
+  <center><button ng-click="clearCart()"  type="button" class="btn btn-success">Clear the cart</button></center><br>  
+  <center><button ng-click="clearCart()"  type="button" class="btn btn-success">Pay</button></center><br>  
+  
+</div>
+]]></template>
+    </sp_widget>
+    <sys_claim action="INSERT_OR_UPDATE">
+        <claim_owner_scope display_value="ChocolateShop">e84e561f879e41103bac52873cbb35f8</claim_owner_scope>
+        <claim_timestamp>17fb560b6b40000001</claim_timestamp>
+        <metadata_update_name>sp_widget_f1550507870641103bac52873cbb3549</metadata_update_name>
+        <previous_claim_app_version>1.0.0</previous_claim_app_version>
+        <previous_claim_name>ChocolateShop</previous_claim_name>
+        <previous_claim_scope>e84e561f879e41103bac52873cbb35f8</previous_claim_scope>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2022-03-23 06:04:48</sys_created_on>
+        <sys_id>8540aa5387de41103bac52873cbb3566</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2022-03-23 06:04:48</sys_updated_on>
+    </sys_claim>
+</record_update>

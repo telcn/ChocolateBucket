@@ -1,0 +1,7 @@
+<?xml version="1.0" encoding="UTF-8"?><database>
+    <element extends="task" label="Chocolate Shopping Cart" max_length="40" name="u_chocolate_shopping_cart" sizeclass="2" type="collection">
+        <element attributes="edge_encryption_enabled=true" label="Name" max_length="40" name="u_name" type="string"/>
+        <element attributes="edge_encryption_enabled=true" label="Price" max_length="40" name="u_price" type="string"/>
+        <element label="Quantity to buy" max_length="40" name="u_quantity_to_buy" type="integer"/>
+    </element>
+</database>

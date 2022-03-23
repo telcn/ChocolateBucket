@@ -1,0 +1,195 @@
+<?xml version="1.0" encoding="UTF-8"?><record_update table="sp_widget">
+    <sp_widget action="INSERT_OR_UPDATE">
+        <category>custom</category>
+        <client_script><![CDATA[
+api.controller=function($scope,spUtil,spModal,$window,$rootScope,$location) {
+	
+  var c = this;
+	
+
+	$scope.cart = function () {
+        $window.location.href = "/chocolateshop/?id=chocolatecart";
+    }
+	
+	c.itemsInCart = [];
+	
+	$scope.clickedBuy = function(cName){
+		c.cName = cName.toString();
+		if(c.cName === "5star.jpg"){
+			$scope.price = c.data.chocolates[0].price;
+			$scope.name = c.data.chocolates[0].name;
+			$scope.id = c.data.chocolates[0].id;
+			$scope.quantity = c.data.chocolates[0].quantity;
+		}
+		if(c.cName === "toblerone.jpg"){
+			$scope.price = c.data.chocolates[1].price;
+			$scope.name = c.data.chocolates[1].name;
+			$scope.id = c.data.chocolates[1].id;
+			$scope.quantity = c.data.chocolates[1].quantity;
+		}
+		
+		if(c.cName === "dairymilk.jpg"){
+			$scope.price = c.data.chocolates[2].price;
+			$scope.name = c.data.chocolates[2].name;
+			$scope.id = c.data.chocolates[2].id;
+			$scope.quantity = c.data.chocolates[2].quantity;
+		}
+		
+
+		spModal.open({
+			title:"Do you want buy "+$scope.name + " ?",
+			message: "Price of the chocolate is: Rs "+$scope.price,
+			label: "Enter the number of chocolates to buy",
+			input:true,
+			buttons: [
+                {label:'✘ ${Cancel}', cancel: true},
+                {label:'✔ ${Add to cart}', primary: true}
+            ]
+		}).then(function(response){		
+			if(response){
+				$scope.quantityToPurchase = response;
+				if(parseInt($scope.quantityToPurchase) > parseInt($scope.quantity)){
+					spUtil.addErrorMessage("last " +$scope.quantity + " chocolates remaining");
+				}
+				if(parseInt($scope.quantityToPurchase) > 5){
+					spUtil.addErrorMessage("Quantity limited to 5 per order");
+				}
+				if(parseInt($scope.quantityToPurchase) <= 5){
+					var item = {};
+					item.name = $scope.name;
+					item.price = $scope.price;
+					item.id = $scope.id ;
+					item.quantity = $scope.quantityToPurchase;
+					c.itemsInCart.push(item);
+					
+					c.data.u_name = $scope.name;
+					c.data.u_price = $scope.price;
+					c.data.u_quantity_to_buy = parseInt($scope.quantityToPurchase);
+					spUtil.update($scope);
+					//var iic = c.itemsInCart[0].name ;
+					//var pp = 'hey';
+					//$location.search('id=chocolatecart&key='+iic);
+					
+					// adding to u_chocolate_shopping_cart
+					spUtil.addInfoMessage($scope.quantityToPurchase + " " + $scope.name + " added to cart");
+				}
+				
+			}
+		})
+	}
+	
+	
+	$scope.shouldShow = false;
+	
+	
+	
+};]]></client_script>
+        <controller_as>c</controller_as>
+        <css/>
+        <data_table>sp_instance</data_table>
+        <demo_data/>
+        <description>Order a chocolate</description>
+        <docs/>
+        <field_list/>
+        <has_preview>true</has_preview>
+        <id>chocolate</id>
+        <internal>false</internal>
+        <link><![CDATA[function link(scope, element, attrs, controller) {
+  
+}]]></link>
+        <name>chocolate</name>
+        <option_schema>[{"name":"chocolatename","section":"other","default_value":"5star","label":"chocolateName","type":"choice","choices":[{"label":"dairymilk","value":"dairymilk"},{"label":"5star","value":"5star"},{"label":"toblerone","value":"toblerone"}]}]</option_schema>
+        <public>true</public>
+        <roles/>
+        <script><![CDATA[(function() {
+  /* populate the 'data' object */
+  /* e.g., data.table = $sp.getValue('table'); */
+
+	var chocolateSelected = options.chocolatename.toString();
+	var csel = chocolateSelected;
+	data.csel =csel.replace(/\s/g, '')
+	chocolateSelected = chocolateSelected+".jpg";
+	data.chocolateName = chocolateSelected;
+	data.prices = {};
+	data.chocolates = [];
+	var chocolateRec = new GlideRecord('u_chocolateshop');
+	chocolateRec.query();
+	while (chocolateRec.next()){
+		var chocolate = {};
+		chocolate.name = chocolateRec.u_name.toString();
+		chocolate.price = chocolateRec.u_price.toString();
+		chocolate.quantity = chocolateRec.u_quantity_available.toString();
+		chocolate.id = chocolateRec.getValue('sys_id');
+		data.chocolates.push(chocolate);
+		data.prices[chocolate.name.replace(/\s/g, '').toLowerCase()] = chocolate.price;
+	}	
+	if(input){
+		var gr = new GlideRecord('u_chocolate_shopping_cart'); 
+		gr.initialize();
+		gr.u_name = input.u_name;
+		gr.u_price = input.u_price;
+		gr.u_quantity_to_buy = input.u_quantity_to_buy;
+		gr.insert();
+	}
+
+
+})();]]></script>
+        <servicenow>false</servicenow>
+        <sys_class_name>sp_widget</sys_class_name>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2022-03-09 05:51:16</sys_created_on>
+        <sys_id>89c65272874e01103bac52873cbb35b0</sys_id>
+        <sys_mod_count>311</sys_mod_count>
+        <sys_name>chocolate</sys_name>
+        <sys_package display_value="Global" source="global">global</sys_package>
+        <sys_policy/>
+        <sys_scope display_value="ChocolateShop">e84e561f879e41103bac52873cbb35f8</sys_scope>
+        <sys_update_name>sp_widget_89c65272874e01103bac52873cbb35b0</sys_update_name>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2022-03-23 06:04:48</sys_updated_on>
+        <template><![CDATA[<style> 
+  #choco {
+    border-style: solid;
+  }
+  
+ img {
+  border: 1px solid #555;
+  }
+  
+  
+</style>
+
+
+
+<div >
+
+ <center> <div id = "choco" class="card border-success mb-3"  style="width: 18rem;">
+  <img id = "chocoImg" class="card-img-top" src="{{data.chocolateName}}" width="120" height="120" alt="Card image cap">
+  <div class="card-body">
+    <h5 class="card-title">{{data.csel}}</h5>
+    <p class="card-text">Price: Rs. {{data.prices[data.csel]}}</p>
+    <center><button id = "buy-btn" ng-click="clickedBuy(data.chocolateName)"  type="button" class="btn btn-success">Add to cart</button></center><br>
+   </div>
+   
+</div>
+
+  
+
+
+]]></template>
+    </sp_widget>
+    <sys_claim action="INSERT_OR_UPDATE">
+        <claim_owner_scope display_value="ChocolateShop">e84e561f879e41103bac52873cbb35f8</claim_owner_scope>
+        <claim_timestamp>17fb560b7070000001</claim_timestamp>
+        <metadata_update_name>sp_widget_89c65272874e01103bac52873cbb35b0</metadata_update_name>
+        <previous_claim_app_version>1.0.0</previous_claim_app_version>
+        <previous_claim_name>ChocolateShop</previous_claim_name>
+        <previous_claim_scope>e84e561f879e41103bac52873cbb35f8</previous_claim_scope>
+        <sys_created_by>admin</sys_created_by>
+        <sys_created_on>2022-03-23 06:04:48</sys_created_on>
+        <sys_id>0d40aa5387de41103bac52873cbb356a</sys_id>
+        <sys_mod_count>0</sys_mod_count>
+        <sys_updated_by>admin</sys_updated_by>
+        <sys_updated_on>2022-03-23 06:04:48</sys_updated_on>
+    </sys_claim>
+</record_update>
