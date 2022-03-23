@@ -52,7 +52,7 @@
         <li><a href="#installation">Installation</a></li>
       </ul>
     </li>
-    <li><a href="#usage">Usage</a></li>
+    
     <li><a href="#roadmap">Roadmap</a></li>
     <li><a href="#contributing">Contributing</a></li>
     <li><a href="#license">License</a></li>
@@ -95,7 +95,7 @@ Get a ServiceNow personal developer instance [here](https://developer.servicenow
 
 1. Clone the repo
    ```sh
-   git clone https://github.com/telcn/ChocolateBucke.git
+   git clone https://github.com/telcn/ChocolateBucket.git
    ```
 2. Import the repo in ServiceNow Studio
 
